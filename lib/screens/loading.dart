@@ -3,6 +3,7 @@ import 'package:iot_project_berry/data/location.dart';
 import 'package:iot_project_berry/data/network.dart';
 import 'package:iot_project_berry/screens/myHome.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:iot_project_berry/data/convlocation.dart';
 
 const apikey = 'cf2c7059313afc2d7dbf789d49aade9d';
 const weatherapi='test';
@@ -17,6 +18,8 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   double? latitude3;
   double? longitude3;
+  int? latx;
+  int? laty;
 
   @override
   void initState() {
@@ -42,10 +45,17 @@ class _LoadingState extends State<Loading> {
   void getLocation() async {
     MyLocation myLocation = MyLocation();
     await myLocation.getMyCurrentLocation();
+
     latitude3 = myLocation.latitude2;
     longitude3 = myLocation.longtitude2;
+    var grid = ConvGridGps.gpsToGRID(latitude3!, longitude3!);
+    latx = grid['x'];
+    laty = grid['y'];
+    print(latx);
+    print(laty);
     print(latitude3);
     print(longitude3);
+
 
     Network network = Network(
         'https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apikey&units=metric',

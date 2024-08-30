@@ -18,4 +18,5 @@ class MyLocation {
       print('There was a problem with the internet connection.');
     }
   }
+
 }
